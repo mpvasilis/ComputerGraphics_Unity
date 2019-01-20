@@ -28,6 +28,12 @@ public class PlayerInteraction : MonoBehaviour
 
     public CharacterController controller;
 
+    public AudioClip buycoins;
+    public AudioClip destoryblock;
+    public AudioClip addblock;
+
+    private AudioSource source;
+
 
     public void updateTexts()
     {
@@ -69,6 +75,8 @@ public class PlayerInteraction : MonoBehaviour
     {
         //DisstanceToTheGround = GetComponent<Collider>().bounds.extents.y;
         updateTexts();
+        source = GetComponent<AudioSource>();
+        
     }
 
     void Update()
@@ -131,6 +139,7 @@ public class PlayerInteraction : MonoBehaviour
                 blocks++;
                 coins -= 5;
                 updateTexts();
+                source.PlayOneShot(buycoins);
                 StartCoroutine(ShowShortMessage(2, "Bought cube!"));
 
             }
@@ -163,7 +172,6 @@ public class PlayerInteraction : MonoBehaviour
             {
                 Vector3 position = hit.point - hit.normal / 2;
                 Destroy(new Vector3(Mathf.Floor(position.x), Mathf.Floor(position.y), Mathf.Ceil(position.z)), hit.collider.gameObject);
-
             }
         }
 
@@ -218,6 +226,7 @@ public class PlayerInteraction : MonoBehaviour
         if (p.canDestroy(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y), Mathf.RoundToInt(position.z)))
         {
             p.SetBlock(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y), Mathf.RoundToInt(position.z), 0);
+           source.PlayOneShot(destoryblock);
 
         }
         else
@@ -231,6 +240,8 @@ public class PlayerInteraction : MonoBehaviour
         Piece p = piece.GetComponent<Piece>();
 
         p.SetBlock(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y), Mathf.RoundToInt(position.z), currentBlock);
+        source.PlayOneShot(addblock);
+
     }
 
     IEnumerator ShowShortMessage(int seconds, string text)

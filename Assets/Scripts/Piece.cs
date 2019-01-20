@@ -14,7 +14,6 @@ public class Piece : MonoBehaviour {
 	protected List<int> triangles = new List<int>();
 	protected List<Vector2> uvs = new List<Vector2>();
 
-	// Use this for initialization
 	void Start () {
 		            BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
 		if(dev==true){
@@ -23,7 +22,7 @@ public class Piece : MonoBehaviour {
 		else{
 	    GenVarStorage GVS = GameObject.Find("Generation Variable Storage").GetComponent<GenVarStorage>();
         size = GVS.ChunkGridSize;
-       // Destroy(GVS.gameObject);
+
 		}
 
 
@@ -42,8 +41,6 @@ public class Piece : MonoBehaviour {
 				content[x,0,z] = 2;
 
 				}
-				//content[x,1,z]= (byte)Mathf.RoundToInt(Random.value);
-				//content[x,2,z]= (byte)Mathf.RoundToInt(Random.value);
 
 			}
 		}
@@ -143,7 +140,6 @@ public class Piece : MonoBehaviour {
 
 		return content [x, y, z] == 0;
 	}
-	// Update is called once per frame
 	private void Generate(){
 
 		mesh = new Mesh();
